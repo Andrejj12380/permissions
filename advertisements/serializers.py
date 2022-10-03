@@ -41,7 +41,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
     def validate(self, data):
         """Метод для валидации. Вызывается при создании и обновлении."""
         queryset = Advertisement.objects.filter(creator=self.context["request"].user)
-        if len(queryset) >= 10:
+        if len(queryset) >= 10 and self.context["request"].method == 'POST':
             raise APIException(detail = "Too many ads. Maybe 10 or less")
-        print(data, self.context["request"].method, self.context["request"].user)
+        # print(data, self.context["request"].method, self.context["request"].user)
         return data
